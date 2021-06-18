@@ -19,7 +19,7 @@ const game = {
 
     FPS: 60,
     player: undefined,
-
+    
 
 
     init() {
@@ -118,6 +118,8 @@ const game = {
                     this.enemyAttacks.push(enemyBullet)
                 }
 
+                this.attackSound = new Audio('./sounds/attack.mp3')
+                this.attackSound.play()
             })
         }
     },
@@ -176,7 +178,11 @@ const game = {
 
                     this.enemies.splice(idxEnemies, 1)
                     this.player.bullets.splice(idxBullet, 1)
+                    this.scoreSound = new Audio('./sounds/score.ogg')
+                    this.scoreSound.play()
                     return this.score += 10
+                    
+
 
                 }
             })
@@ -216,6 +222,8 @@ const game = {
             this.player.posY <= this.power.posY + this.power.height) {
             this.player.life++ 
             this.power = undefined
+            this.powerSound = new Audio('./sounds/power.mp3')
+            this.powerSound.play()
             return this.score += 100
         }
     },
@@ -237,7 +245,10 @@ const game = {
         if(this.player.life <= 0) {
             this.ctx.drawImage(this.gameOverP, 0, 0, this.width, this.height)
             clearInterval(this.interval)
+            this.gameoverSound = new Audio('./sounds/gameover.mp3')
+            this.gameoverSound.play()
         }
+        
     },
 
     drawScore() {
@@ -250,9 +261,9 @@ const game = {
 
 
     isFinish() {
-        console.log(this.score, 'score')
         if (this.score >= 200) {
             this.finish = new Finish(this.ctx, this.width, this.player.posYZero, this.player.height)
+            
         }
     },
 
@@ -263,8 +274,10 @@ const game = {
                 this.player.posX <= this.finish.posX + this.finish.width &&
                 this.player.posY <= this.finish.posY + this.finish.height) {
                 this.ctx.drawImage(this.winCup, 0, 0, this.width, this.height)
+                clearInterval(this.interval)
                 this.gameOver()
-                
+                this.victorySound = new Audio('./sounds/victory.mp3')
+                this.victorySound.play()
             }
         }
         

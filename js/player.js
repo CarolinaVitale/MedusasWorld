@@ -2,7 +2,7 @@ class Player {
 
     constructor(ctx, gameWidth, gameHeight) {
 
-        this.ctx = ctx;
+        this.ctx = ctx
 
         this.width = 170
         this.height = 150
@@ -18,7 +18,7 @@ class Player {
 
         this.posX = 50
         this.posY = this.gameHeight - this.height - 70
-        this.posYZero = this.posY;
+        this.posYZero = this.posY
 
         this.velY = 1
         this.gravity = 0.4
@@ -26,10 +26,11 @@ class Player {
         this.bullets = []
         this.life = 5
         this.invincible = false
-
+        this.jumpSound = new Audio('./sounds/jump.mp3')
+        this.shootSound = new Audio('./sounds/shoot.mp3')
         
 
-        this.setListeners();
+        this.setListeners()
     }
 
     draw(framesCounter) {
@@ -61,10 +62,10 @@ class Player {
 
     animateSprite(framesCounter) {
         if (framesCounter % 2 == 0) {
-            this.imageInstance.framesIndex++;
+            this.imageInstance.framesIndex++
         }
         if (this.imageInstance.framesIndex >= this.imageInstance.frames) {
-            this.imageInstance.framesIndex = 0;
+            this.imageInstance.framesIndex = 0
         }
     }
 
@@ -74,7 +75,7 @@ class Player {
             this.velY += this.gravity;
         } else {
             this.posY = this.posYZero;
-            this.velY = 1;        }
+            this.velY = 1        }
     }
 
     setListeners() {
@@ -84,10 +85,12 @@ class Player {
             switch (e.code) {
                 case "ArrowUp":
                     this.jump()
-                    break;
+                    this.jumpSound.play()
+                    break
                 case "ArrowRight":
-                    this.shoot();
-                    break;
+                    this.shoot()
+                    this.shootSound.play()
+                    break
             }
         });
     }
